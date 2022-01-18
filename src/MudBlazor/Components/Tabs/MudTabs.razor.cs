@@ -369,20 +369,20 @@ namespace MudBlazor
 
         public void ActivatePanel(MudTabPanel panel, bool ignoreDisabledState = false)
         {
-            ActivatePanel(panel, null, ignoreDisabledState);
+            ActivatePanel(panel, (MouseEventArgs)null, ignoreDisabledState);
         }
 
         public void ActivatePanel(int index, bool ignoreDisabledState = false)
         {
             var panel = _panels[index];
-            ActivatePanel(panel, null, ignoreDisabledState);
+            ActivatePanel(panel, (MouseEventArgs)null, ignoreDisabledState);
         }
 
         public void ActivatePanel(object id, bool ignoreDisabledState = false)
         {
             var panel = _panels.Where((p) => Equals(p.ID, id)).FirstOrDefault();
             if (panel != null)
-                ActivatePanel(panel, null, ignoreDisabledState);
+                ActivatePanel(panel, (MouseEventArgs)null, ignoreDisabledState);
         }
 
         private void ActivatePanel(MudTabPanel panel, MouseEventArgs ev, bool ignoreDisabledState = false)
@@ -398,6 +398,25 @@ namespace MudBlazor
                 SetSliderState();
                 SetScrollabilityStates();
                 StateHasChanged();
+            }
+        }
+
+        private void ActivatePanel(MudTabPanel panel, KeyboardEventArgs ev, bool ignoreDisabledState = false)
+        {
+            if (ev.Code == "Enter" || ev.Code == "NumpadEnter")
+            {
+                if (!panel.Disabled || ignoreDisabledState)
+                {
+                    ActivePanelIndex = _panels.IndexOf(panel);
+
+                    if (ev != null)
+                        ActivePanel.OnClick.InvokeAsync();
+
+                    CenterScrollPositionAroundSelectedItem();
+                    SetSliderState();
+                    SetScrollabilityStates();
+                    StateHasChanged();
+                }
             }
         }
 
