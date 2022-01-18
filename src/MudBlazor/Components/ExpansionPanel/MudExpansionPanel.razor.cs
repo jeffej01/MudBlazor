@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor.Utilities;
 
 namespace MudBlazor
@@ -48,6 +49,10 @@ namespace MudBlazor
         [Parameter]
         [Category(CategoryTypes.ExpansionPanel.Behavior)]
         public string Text { get; set; }
+
+        [Parameter]
+        [Category(CategoryTypes.ExpansionPanel.Behavior)]
+        public int TabIndex { get; set; } = 0;
 
         /// <summary>
         /// If true, expand icon will not show
@@ -143,6 +148,13 @@ namespace MudBlazor
             }
         }
 
+        public void ToggleExpansion(KeyboardEventArgs e)
+        {
+            if (e.Code == "Enter" || e.Code == "NumpadEnter")
+            {
+                ToggleExpansion();
+            }
+        }
         public void ToggleExpansion()
         {
             if (Disabled)
