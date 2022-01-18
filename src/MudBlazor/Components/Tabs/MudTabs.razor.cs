@@ -27,6 +27,7 @@ namespace MudBlazor
         private double _toolbarContentSize;
         private double _allTabsSize;
         private double _scrollPosition;
+        private IList<double> _scrollPoints = new List<double>();
 
 
         [CascadingParameter] public bool RightToLeft { get; set; }
@@ -394,10 +395,7 @@ namespace MudBlazor
                 if (ev != null)
                     ActivePanel.OnClick.InvokeAsync(ev);
 
-                CenterScrollPositionAroundSelectedItem();
-                SetSliderState();
-                SetScrollabilityStates();
-                StateHasChanged();
+                PanelSetState();
             }
         }
 
@@ -412,12 +410,17 @@ namespace MudBlazor
                     if (ev != null)
                         ActivePanel.OnClick.InvokeAsync();
 
-                    CenterScrollPositionAroundSelectedItem();
-                    SetSliderState();
-                    SetScrollabilityStates();
-                    StateHasChanged();
+                    PanelSetState();
                 }
             }
+        }
+
+        private void PanelSetState()
+        {
+            CenterScrollPositionAroundSelectedItem();
+            SetSliderState();
+            SetScrollabilityStates();
+            StateHasChanged();
         }
 
         #endregion
@@ -580,10 +583,12 @@ namespace MudBlazor
         private void GetAllTabsSize()
         {
             double totalTabsSize = 0;
+            _scrollPoints.Add(totalTabsSize);
 
             foreach (var panel in _panels)
             {
                 totalTabsSize += GetRelevantSize(panel.PanelRef);
+                _scrollPoints.Add(totalTabsSize);
             }
 
             _allTabsSize = totalTabsSize;
@@ -644,8 +649,10 @@ namespace MudBlazor
             {
                 scrollValue = _allTabsSize - _toolbarContentSize - 96;
             }
+            // Ensure we set to a precise srcoll point
+            double scrollTo = _scrollPoints.TakeWhile(p => p < scrollValue).Last();
 
-            _scrollPosition = scrollValue;
+            _scrollPosition = _scrollPosition + scrollTo;
 
             SetScrollabilityStates();
         }
