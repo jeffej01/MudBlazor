@@ -583,7 +583,11 @@ namespace MudBlazor
         private void GetAllTabsSize()
         {
             double totalTabsSize = 0;
-            _scrollPoints.Add(totalTabsSize);
+
+            if (_panels.Count() > 0)
+            {
+                _scrollPoints.Add(totalTabsSize);
+            }
 
             foreach (var panel in _panels)
             {
@@ -650,9 +654,9 @@ namespace MudBlazor
                 scrollValue = _allTabsSize - _toolbarContentSize - 96;
             }
             // Ensure we set to a precise srcoll point
-            double scrollTo = _scrollPoints.TakeWhile(p => p < scrollValue).Last();
+            double scrollTo = _scrollPoints.TakeWhile(p => p <= scrollValue).Last();
 
-            _scrollPosition = _scrollPosition + scrollTo;
+            _scrollPosition = scrollTo;
 
             SetScrollabilityStates();
         }
