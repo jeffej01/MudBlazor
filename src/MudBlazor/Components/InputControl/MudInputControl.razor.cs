@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System;
+using Microsoft.AspNetCore.Components;
 using MudBlazor.Extensions;
 using MudBlazor.Utilities;
 
@@ -56,6 +57,7 @@ namespace MudBlazor
         /// The ErrorText that will be displayed if Error true
         /// </summary>
         [Parameter] public string ErrorText { get; set; }
+        [Parameter] public string ErrorId { get; set; }
 
         /// <summary>
         /// The HelperText will be displayed below the text field.
@@ -91,6 +93,7 @@ namespace MudBlazor
         /// If true, the input element will be disabled.
         /// </summary>
         [Parameter] public bool Disabled { get; set; }
+
 
     }
 }

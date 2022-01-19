@@ -145,6 +145,8 @@ namespace MudBlazor
 
         private Size GetButtonSize() => Margin == Margin.Dense ? Size.Small : Size.Medium;
 
+
+
         private bool _showClearable;
 
         private void UpdateClearable(object value)
