@@ -37,7 +37,11 @@ namespace MudBlazor.UnitTests.Other
                 typeof(HeaderCell<>),
                 typeof(FooterCell<>),
                 typeof(Cell<>),
+                typeof(HeaderContext<>),
+                typeof(FooterContext<>),
+                typeof(CellContext<>),
                 typeof(MudDataGridPager<>),
+                typeof(SelectColumn<>),
 
                 typeof(MudTHeadRow),
                 typeof(MudTFootRow),
@@ -79,7 +83,7 @@ namespace MudBlazor.UnitTests.Other
                         property.GetCustomAttribute<CategoryAttribute>() == null)     // property doesn't have a category
                     {
                         isTestOK = false;
-                        //Console.WriteLine($"{component}.{property.Name} property doesn't have a category");
+                        Console.WriteLine($"{component}.{property.Name} property doesn't have a category");
                     }
                 }
             }
