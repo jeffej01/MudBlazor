@@ -157,9 +157,6 @@ namespace MudBlazor
             return null;
         }
 
-        [Parameter]
-        public string ErrorId { get; set; }
-
         /// <summary>
         /// This manages the state of having been "touched" by the user. A form control always starts out untouched
         /// but becomes touched when the user performed input or the blur event was raised.
